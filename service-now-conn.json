@@ -1,0 +1,34 @@
+{
+			"name": "svc-now-con",
+
+			"configVariables": [
+				{
+					"key": "proxy_enabled"
+				}
+			],
+			"authConfig": {
+				"authType": "USER_PASSWORD",
+				"userPassword": {
+					"username": "admin",
+					"password": {
+						"secretVersion": "projects/212527619573/secrets/svcnow-password/versions/1"
+					}
+				}
+			},
+			"serviceAccount": "sample-compute@developer.gserviceaccount.com",
+			"serviceDirectory": "projects/db62e795507c32c1b-tp/locations/us-central1/namespaces/connectors/services/runtime",
+			"destinationConfigs": [
+				{
+					"key": "host_url",
+					"destinations": [
+						{
+							"host": "https://yourinstance.service-now.com/"
+						}
+					]
+				}
+			],
+			"nodeConfig": {
+				"minNodeCount": 2,
+				"maxNodeCount": 50
+			}
+		}

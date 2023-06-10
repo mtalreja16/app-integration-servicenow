@@ -1,0 +1,92 @@
+{
+    "triggerConfigs": [
+        {
+            "label": "API Trigger",
+            "triggerType": "API",
+            "triggerNumber": "1",
+            "triggerId": "api_trigger/bqsf_API_1",
+            "startTasks": [
+                {
+                    "taskId": "4"
+                }
+            ],
+            "properties": {
+                "Trigger name": "bqsf_API_1"
+            }
+        }
+    ],
+    "taskConfigs": [
+        {
+            "task": "GenericConnectorTask",
+            "taskId": "5",
+            "parameters": {
+                "config": {
+                    "key": "config",
+                    "value": {
+                        "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.connectors.GenericConnectorTaskConfig\",\n  \"connection\": {\n    \"connectionName\": \"projects/dynolab-integration/locations/us-central1/connections/svc-now-con\",\n    \"serviceName\": \"projects/db62e795507c32c1b-tp/locations/us-central1/namespaces/connectors/services/runtime\",\n    \"connectorVersion\": \"projects/dynolab-integration/locations/global/providers/servicenow/connectors/servicenow/versions/1\"\n  },\n  \"operation\": \"CREATE_ENTITY\"\n}"
+                    }
+                },
+                "connectorInputPayload": {
+                    "key": "connectorInputPayload",
+                    "value": {
+                        "stringValue": "$`Task_5_connectorInputPayload`$"
+                    }
+                },
+                "connectorOutputPayload": {
+                    "key": "connectorOutputPayload",
+                    "value": {
+                        "stringValue": "$`Task_5_connectorOutputPayload`$"
+                    }
+                },
+                "entityType": {
+                    "key": "entityType",
+                    "value": {
+                        "stringValue": "x_608850_test_contacts"
+                    }
+                }
+            },
+            "displayName": "Connectors",
+            "taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+        },
+        {
+            "task": "FieldMappingTask",
+            "taskId": "4",
+            "parameters": {
+                "FieldMappingConfigTaskParameterKey": {
+                    "key": "FieldMappingConfigTaskParameterKey",
+                    "value": {
+                        "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$samplepayload.First_Name$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.first_name$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$samplepayload.Email$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.email$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$samplepayload.Last_Name$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.last_name$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$samplepayload.Phone$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.phone$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$samplepayload.Date_of_birth$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.date_of_birth$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$samplepayload.Job_Title$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_5_connectorInputPayload`.job_title$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+                    }
+                }
+            },
+            "displayName": "Data Mapping",
+            "nextTasks": [
+                {
+                    "taskId": "5"
+                }
+            ],
+            "taskExecutionStrategy": "WHEN_ALL_SUCCEED"
+        }
+    ],
+    "integrationParameters": [
+        {
+            "key": "`Task_5_connectorInputPayload`",
+            "dataType": "JSON_VALUE",
+            "producer": "1_5",
+            "jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"sys_id\": {\n      \"type\": \"string\",\n      \"readOnly\": false\n    },\n    \"date_of_birth\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"email\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"first_name\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"job_title\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"last_name\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"phone\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"sex\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"sys_created_by\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"sys_created_on\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"sys_mod_count\": {\n      \"type\": [\"number\", \"null\"],\n      \"readOnly\": false\n    },\n    \"sys_tags\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"sys_updated_by\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"sys_updated_on\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    },\n    \"user_id\": {\n      \"type\": [\"string\", \"null\"],\n      \"readOnly\": false\n    }\n  }\n}"
+        },
+        {
+            "key": "`Task_5_connectorOutputPayload`",
+            "dataType": "JSON_VALUE",
+            "isTransient": true,
+            "inputOutputType": "OUT",
+            "producer": "1_5"
+        },
+        {
+            "key": "samplepayload",
+            "dataType": "JSON_VALUE",
+            "inputOutputType": "IN",
+            "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"First_Name\": {\n      \"type\": \"string\"\n    },\n    \"Email\": {\n      \"type\": \"string\"\n    },\n    \"Last_Updated_Date\": {\n      \"type\": \"array\"\n    },\n    \"Last_Name\": {\n      \"type\": \"string\"\n    },\n    \"Phone\": {\n      \"type\": \"string\"\n    },\n    \"Date_of_birth\": {\n      \"type\": \"string\"\n    },\n    \"Sex\": {\n      \"type\": \"string\"\n    },\n    \"Index\": {\n      \"type\": \"string\"\n    },\n    \"User_Id\": {\n      \"type\": \"string\"\n    },\n    \"Job_Title\": {\n      \"type\": \"string\"\n    },\n    \"Update_Time\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+        }
+    ]
+}
